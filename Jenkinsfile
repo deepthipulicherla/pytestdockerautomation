@@ -3,10 +3,10 @@ pipeline {
 
     stages {
         stage('Clone Repo') {
-            steps {
-                git 'https://github.com/deepthipulicherla/pytestdockerautomation.git'
-            }
-        }
+    steps {
+        git branch: 'main', url: 'https://github.com/deepthipulicherla/pytestdockerautomation.git'
+    }
+}
 
         stage('Build Docker Image') {
             steps {
