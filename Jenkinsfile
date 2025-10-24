@@ -12,6 +12,7 @@ pipeline {
             steps {
                 sh 'docker rm -f temp-runner || true'
                 sh 'docker create --name temp-runner pytest-runner'
+                sh 'docker start -a temp-runner'
                 sh 'docker cp temp-runner:/app/reports/report.html reports/report.html || echo "Report not found"'
                 sh 'docker rm temp-runner'
             }
