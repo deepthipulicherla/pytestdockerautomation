@@ -9,12 +9,10 @@ pipeline {
         }
 
         stage('Run Tests') {
-    steps {
-        sh 'docker create --name temp-runner pytest-runner'
-        sh 'docker cp temp-runner:/app/reports/report.html reports/report.html'
-        sh 'docker rm temp-runner'
-    }
-}
+            steps {
+                sh 'docker run --rm  pytest-runner'
+            }
+        }
 
         stage('Send Email') {
             steps {
