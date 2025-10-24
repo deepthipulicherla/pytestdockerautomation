@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t pytest-runner .'
@@ -11,21 +10,21 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm -v $WORKSPACE:/app pytest-runner'
+                sh 'docker run --rm -v $WORKSPACE/reports:/app/reports pytest-runner'
             }
         }
 
-         stage('Send Email') {
-    steps {
-        emailext (
-            subject: "Pytest Report",
-            body: "Test execution completed. Please find the attached HTML report.",
-            to: "deepthi1987.p@gmail.com",
-            attachLog: false,
-            attachmentsPattern: "report.html"
-        )
-    }
-}
+        stage('Send Email') {
+            steps {
+                emailext (
+                    subject: "Pytest Report",
+                    body: "Test execution completed. Please find the attached HTML report.",
+                    to: "deepthi1987.p@gmail.com",
+                    attachLog: false,
+                    attachmentsPattern: "reports/report.html"
+                )
+            }
+        }
     }
 
     post {
