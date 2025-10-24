@@ -10,19 +10,16 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    dockerImage = docker.build("pytest-runner")
-                }
+                sh 'docker build -t pytest-runner .'
             }
         }
 
-        stage('Run Tests in Container') {
+        stage('Run Tests') {
             steps {
-                script {
-                    dockerImage.run("-v $WORKSPACE/reports:/app/reports")
-                }
+                sh 'docker run --rm pytest-runner'
             }
         }
+
          stage('Send Email') {
     steps {
         emailext (
