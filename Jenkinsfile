@@ -10,8 +10,9 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'mkdir -p reports'
-                sh 'docker run --rm -v $WORKSPACE/reports:/app/reports pytest-runner'
+                sh 'docker create --name temp-runner pytest-runner'
+                sh 'docker cp temp-runner:/app/reports/report.html reports/report.html || echo "Report not found"'
+                sh 'docker rm temp-runner'
             }
         }
 
