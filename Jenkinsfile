@@ -9,11 +9,12 @@ pipeline {
         }
 
         stage('Run Tests') {
-            steps {
-                sh 'mkdir -p reports'
-                sh 'docker run --rm -v $WORKSPACE/reports:/app/reports pytest-runner'
-            }
-        }
+    steps {
+        sh 'docker create --name temp-runner pytest-runner'
+        sh 'docker cp temp-runner:/app/reports/report.html reports/report.html'
+        sh 'docker rm temp-runner'
+    }
+}
 
         stage('Send Email') {
             steps {
