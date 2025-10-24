@@ -10,7 +10,8 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm  pytest-runner'
+                sh 'mkdir -p reports'
+                sh 'docker run --rm -v $WORKSPACE/reports:/app/reports pytest-runner'
             }
         }
 
