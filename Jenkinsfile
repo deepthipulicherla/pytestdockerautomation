@@ -11,7 +11,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm pytest-runner'
+                sh 'docker run --rm -v $WORKSPACE:/app pytest-runner'
             }
         }
 
